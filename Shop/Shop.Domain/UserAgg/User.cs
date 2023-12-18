@@ -79,6 +79,7 @@ namespace Shop.Domain.UserAgg
 
         public void CharegWalet(Wallet  wallet)
         {
+            wallet.UserId = Id;
             Wallets.Add(wallet);
         }
 
