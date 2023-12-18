@@ -1,6 +1,7 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Shop.Domain.UserAgg.Enum;
+using Shop.Domain.UserAgg.Services;
 
 namespace Shop.Domain.UserAgg
 {
@@ -35,8 +36,10 @@ namespace Shop.Domain.UserAgg
         public List<UserRole> Roles { get; private set; }
    
 
-        public void Edit(string name, string family, string phoneNumber, string email, Gender gender)
+        public void Edit(string name, string family, string phoneNumber, string email,
+            Gender gender,IDomainUserService domainServcie)
         {
+            Guard(phoneNumber, email, domainServcie);
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
@@ -78,7 +81,7 @@ namespace Shop.Domain.UserAgg
             Roles.AddRange(roles);
         }
 
-        public void Guard(string phoneNumber , string email)
+        public void Guard(string phoneNumber , string email,IDomainUserService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber,nameof(phoneNumber));
             NullOrEmptyDomainDataException.CheckString(email, nameof(email));
@@ -89,6 +92,13 @@ namespace Shop.Domain.UserAgg
             if (email.IsValidEmail() == false)
                 throw new InvalidDomainDataException("ایمیل نامعتبر است");
 
+            if (phoneNumber != PhoneNumber)
+                if (domainService.PhoneNumberIsExist(phoneNumber))
+                    throw new InvalidDomainDataException("شماره موبایل تکراری است");
+
+            if (email != Email)
+                if (domainService.IsEmailExist(email))
+                    throw new InvalidDomainDataException("ایمیل تکراری است");
         }
     }
 }
