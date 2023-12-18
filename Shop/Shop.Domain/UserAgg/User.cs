@@ -7,8 +7,10 @@ namespace Shop.Domain.UserAgg
 {
     public class User:AggregateRoot
     {
-        public User(string name, string family, string phoneNumber, string email, string password, Gender gender)
+        public User(string name, string family, string phoneNumber, string email, string password,
+            Gender gender, IDomainUserService domainServcie)
         {
+            Guard(phoneNumber, email, domainServcie);
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
@@ -35,6 +37,11 @@ namespace Shop.Domain.UserAgg
 
         public List<UserRole> Roles { get; private set; }
    
+        public static User RegsiterUser(string email,string phonNumber,string password, IDomainUserService domainServcie)
+        {
+            return new ("","",email,phonNumber,password, Gender.None, domainServcie);
+        }
+
 
         public void Edit(string name, string family, string phoneNumber, string email,
             Gender gender,IDomainUserService domainServcie)
@@ -75,8 +82,9 @@ namespace Shop.Domain.UserAgg
             Wallets.Add(wallet);
         }
 
-        public void AddRoles(List<UserRole> roles)
+        public void SetRoles(List<UserRole> roles)
         {
+            roles.ForEach(p => p.UserId = Id );
             Roles.Clear();
             Roles.AddRange(roles);
         }

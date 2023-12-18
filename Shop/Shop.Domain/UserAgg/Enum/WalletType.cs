@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.UserAgg.Enum
 {
-    public enum Gender
+    public enum WalletType
     {
-        None,
-        Male,
-        Famele
-
+        Deposit,
+        Withdrawl
     }
 }
