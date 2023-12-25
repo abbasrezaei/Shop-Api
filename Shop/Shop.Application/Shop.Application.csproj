@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Comments\Create\" />
-    <Folder Include="Comments\Edit\" />
-    <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Entities\Baner\Create\" />
     <Folder Include="Entities\Baner\Edit\" />
     <Folder Include="Entities\Slider\Create\" />
