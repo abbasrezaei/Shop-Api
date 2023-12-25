@@ -39,7 +39,7 @@ namespace Shop.Domain.ProductAgg
 
         }
         public Product(string title, string imageName, string description,
-            long categoryId, long subCategoryId, long secounderySubCategoryId, IProductDomainService domainService
+            long categoryId, long subCategoryId, long secounderySubCategoryId, IProductDomainService domainService,
             string slug, SeoData seoData)
         {
             Guard(title, slug, imageName, description, domainService);
